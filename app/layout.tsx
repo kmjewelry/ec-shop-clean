@@ -6,16 +6,11 @@ export const metadata = {
   description: "Fine Jewelry Collection",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
       <body style={{ margin: 0, fontFamily: "Arial" }}>
         <CartProvider>
-
           <header
             style={{
               display: "flex",
@@ -28,9 +23,6 @@ export default function RootLayout({
 
             <nav style={{ display: "flex", gap: "20px" }}>
               <Link href="/products">Products</Link>
-              <Link href="/collections">Collections</Link>
-              <Link href="/about">About</Link>
-              <Link href="/contact">Contact</Link>
               <Link href="/cart">Cart</Link>
             </nav>
           </header>
@@ -47,7 +39,6 @@ export default function RootLayout({
           >
             © {new Date().getFullYear()} KM Jewelry
           </footer>
-
         </CartProvider>
       </body>
     </html>

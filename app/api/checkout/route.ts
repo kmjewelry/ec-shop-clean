@@ -10,9 +10,7 @@ export async function POST(req: Request) {
     line_items: body.items.map((item: any) => ({
       price_data: {
         currency: "jpy",
-        product_data: {
-          name: item.name,
-        },
+        product_data: { name: item.name },
         unit_amount: item.price,
       },
       quantity: 1,

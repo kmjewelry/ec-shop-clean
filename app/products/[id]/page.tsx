@@ -1,19 +1,28 @@
+"use client";
+
+import { useCart } from "@/app/cart/store";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { useParams } from "next/navigation";
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { data: product } = await supabase
-    .from("products")
-    .select("*")
-    .eq("id", params.id)
-    .single();
+export default function ProductPage() {
+  const params = useParams();
+  const { addToCart } = useCart();
+  const [product, setProduct] = useState<any>(null);
 
-  if (!product) {
-    return <div style={{ padding: "60px" }}>Product not found</div>;
-  }
+  useEffect(() => {
+    const loadProduct = async () => {
+      const { data } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", params.id)
+        .single();
+      setProduct(data);
+    };
+    loadProduct();
+  }, []);
+
+  if (!product) return <div style={{ padding: 60 }}>Loading...</div>;
 
   return (
     <div
@@ -24,47 +33,19 @@ export default async function ProductPage({
         gap: "60px",
       }}
     >
-      {/* 商品画像 */}
+      <img src={product.image_url} style={{ width: "100%" }} />
+
       <div>
-        <img
-          src={product.image_url}
-          style={{
-            width: "100%",
-          }}
-        />
-      </div>
-
-      {/* 商品情報 */}
-      <div>
-        <h1 style={{ fontSize: "36px", marginBottom: "20px" }}>
-          {product.name}
-        </h1>
-
-        <p
-          style={{
-            fontSize: "24px",
-            marginBottom: "20px",
-          }}
-        >
-          ¥{product.price}
-        </p>
-
-        <p
-          style={{
-            marginBottom: "40px",
-            lineHeight: "1.6",
-          }}
-        >
-          {product.description}
-        </p>
-
+        <h1>{product.name}</h1>
+        <p style={{ fontSize: 24 }}>¥{product.price}</p>
+        <p style={{ marginBottom: 40 }}>{product.description}</p>
         <button
+          onClick={() => addToCart(product)}
           style={{
             padding: "14px 28px",
             background: "black",
             color: "white",
             border: "none",
-            fontSize: "16px",
             cursor: "pointer",
           }}
         >

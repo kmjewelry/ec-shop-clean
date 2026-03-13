@@ -19,8 +19,17 @@ export default function CartPage() {
     <div style={{ padding: 60 }}>
       <h1>Cart</h1>
 
+      {cart.length === 0 && <p>Your cart is empty</p>}
+
       {cart.map((item, i) => (
-        <div key={i} style={{ display: "flex", gap: 20 }}>
+        <div
+          key={i}
+          style={{
+            display: "flex",
+            gap: 20,
+            marginBottom: 20,
+          }}
+        >
           <img src={item.image_url} width={80} />
           <div>
             <h3>{item.name}</h3>
@@ -37,6 +46,7 @@ export default function CartPage() {
             padding: "16px 32px",
             background: "black",
             color: "white",
+            cursor: "pointer",
           }}
         >
           Checkout
