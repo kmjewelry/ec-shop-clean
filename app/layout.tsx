@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CartProvider } from "./cart/store";
 
 export const metadata = {
   title: "KM Jewelry",
@@ -12,47 +13,42 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body style={{ margin: 0, fontFamily: "Arial, sans-serif" }}>
-        
-        {/* HEADER */}
-        <header
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "20px 40px",
-            borderBottom: "1px solid #eee",
-          }}
-        >
-          <Link href="/" style={{ textDecoration: "none", color: "black" }}>
-            <h2>KM Jewelry</h2>
-          </Link>
+      <body style={{ margin: 0, fontFamily: "Arial" }}>
+        <CartProvider>
 
-          <nav style={{ display: "flex", gap: "20px" }}>
-            <Link href="/products">Products</Link>
-            <Link href="/collections">Collections</Link>
-            <Link href="/about">About</Link>
-            <Link href="/contact">Contact</Link>
-          </nav>
-        </header>
+          <header
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "20px 40px",
+              borderBottom: "1px solid #eee",
+            }}
+          >
+            <Link href="/">KM Jewelry</Link>
 
-        {/* PAGE CONTENT */}
-        <main>{children}</main>
+            <nav style={{ display: "flex", gap: "20px" }}>
+              <Link href="/products">Products</Link>
+              <Link href="/collections">Collections</Link>
+              <Link href="/about">About</Link>
+              <Link href="/contact">Contact</Link>
+              <Link href="/cart">Cart</Link>
+            </nav>
+          </header>
 
-        {/* FOOTER */}
-        <footer
-          style={{
-            marginTop: "80px",
-            padding: "40px",
-            borderTop: "1px solid #eee",
-            textAlign: "center",
-            fontSize: "14px",
-            color: "#666",
-          }}
-        >
-          <p>© {new Date().getFullYear()} KM Jewelry</p>
-        </footer>
+          <main>{children}</main>
 
+          <footer
+            style={{
+              marginTop: "80px",
+              padding: "40px",
+              borderTop: "1px solid #eee",
+              textAlign: "center",
+            }}
+          >
+            © {new Date().getFullYear()} KM Jewelry
+          </footer>
+
+        </CartProvider>
       </body>
     </html>
   );

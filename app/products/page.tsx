@@ -1,46 +1,59 @@
+"use client";
+
+import { useCart } from "@/app/cart/store";
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { useParams } from "next/navigation";
 
-export default async function ProductsPage() {
-  const { data: products, error } = await supabase
-    .from("products")
-    .select("*");
+export default function ProductPage() {
+  const params = useParams();
+  const { addToCart } = useCart();
+  const [product, setProduct] = useState<any>(null);
 
-  if (error) {
-    return <div>Failed to load products</div>;
-  }
+  useEffect(() => {
+    const loadProduct = async () => {
+      const { data } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", params.id)
+        .single();
+
+      setProduct(data);
+    };
+
+    loadProduct();
+  }, []);
+
+  if (!product) return <div style={{ padding: 60 }}>Loading...</div>;
 
   return (
-    <div style={{ padding: "60px" }}>
-      <h1 style={{ marginBottom: "40px" }}>Products</h1>
+    <div
+      style={{
+        padding: "80px",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "60px",
+      }}
+    >
+      <img src={product.image_url} style={{ width: "100%" }} />
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
-          gap: "30px",
-        }}
-      >
-        {products?.map((product) => (
-          <a
-            key={product.id}
-            href={`/products/${product.id}`}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <div>
-              <img
-                src={product.image_url}
-                style={{
-                  width: "100%",
-                  marginBottom: "10px",
-                }}
-              />
+      <div>
+        <h1>{product.name}</h1>
+        <p style={{ fontSize: 24 }}>¥{product.price}</p>
 
-              <h3>{product.name}</h3>
+        <p style={{ marginBottom: 40 }}>{product.description}</p>
 
-              <p>¥{product.price}</p>
-            </div>
-          </a>
-        ))}
+        <button
+          onClick={() => addToCart(product)}
+          style={{
+            padding: "14px 28px",
+            background: "black",
+            color: "white",
+            border: "none",
+          }}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );
