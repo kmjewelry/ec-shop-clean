@@ -22,6 +22,12 @@ export async function POST(req: NextRequest) {
     payment_method_types: ["card"],
     line_items,
     mode: "payment",
+    shipping_address_collection: {
+      allowed_countries: ["JP"],
+    },
+    phone_number_collection: {
+      enabled: true,
+    },
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
   });
