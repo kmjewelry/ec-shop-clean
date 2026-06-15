@@ -1,59 +1,62 @@
 "use client";
 
-import { useCart } from "@/app/cart/store";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { useParams } from "next/navigation";
 
-export default function ProductPage() {
-  const params = useParams();
-  const { addToCart } = useCart();
-  const [product, setProduct] = useState<any>(null);
+export default function ProductsPage() {
+  const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    const loadProduct = async () => {
-      const { data } = await supabase
-        .from("products")
-        .select("*")
-        .eq("id", params.id)
-        .single();
-
-      setProduct(data);
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from("products").select("*");
+      if (error) {
+        console.error("Supabase fetch error:", error.message);
+      } else {
+        setProducts(data || []);
+      }
     };
-
-    loadProduct();
+    fetchProducts();
   }, []);
 
-  if (!product) return <div style={{ padding: 60 }}>Loading...</div>;
-
   return (
-    <div
-      style={{
-        padding: "80px",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "60px",
-      }}
-    >
-      <img src={product.image_url} style={{ width: "100%" }} />
-
-      <div>
-        <h1>{product.name}</h1>
-        <p style={{ fontSize: 24 }}>¥{product.price}</p>
-
-        <p style={{ marginBottom: 40 }}>{product.description}</p>
-
-        <button
-          onClick={() => addToCart(product)}
-          style={{
-            padding: "14px 28px",
-            background: "black",
-            color: "white",
-            border: "none",
-          }}
-        >
-          Add to Cart
-        </button>
+    <div style={{ padding: "80px", fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ fontSize: 36, marginBottom: 60, fontWeight: 300 }}>Our Collection</h1>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: 40,
+        }}
+      >
+        {products.map((product) => (
+          <Link
+            key={product.id}
+            href={`/products/${product.id}`}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 20,
+              transition: "transform 0.2s",
+            }}
+          >
+            <img
+              src={product.image_url}
+              alt={product.name}
+              style={{
+                width: "100%",
+                borderRadius: 16,
+                objectFit: "cover",
+                boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+              }}
+            />
+            <h2 style={{ fontSize: 20, fontWeight: 400 }}>{product.name}</h2>
+            <p style={{ fontSize: 18, fontWeight: 300 }}>¥{product.price}</p>
+          </Link>
+        ))}
       </div>
     </div>
   );

@@ -10,30 +10,34 @@ export default function CartPage() {
       method: "POST",
       body: JSON.stringify({ items: cart }),
     });
-
     const data = await res.json();
     window.location.href = data.url;
   };
 
   return (
-    <div style={{ padding: 60 }}>
-      <h1>Cart</h1>
+    <div style={{ padding: 80, fontFamily: "Arial, sans-serif" }}>
+      <h1 style={{ fontSize: 36, fontWeight: 300, marginBottom: 40 }}>Shopping Cart</h1>
 
-      {cart.length === 0 && <p>Your cart is empty</p>}
+      {cart.length === 0 && <p style={{ fontSize: 18 }}>Your cart is empty</p>}
 
       {cart.map((item, i) => (
         <div
           key={i}
           style={{
             display: "flex",
-            gap: 20,
-            marginBottom: 20,
+            gap: 40,
+            marginBottom: 40,
+            alignItems: "center",
           }}
         >
-          <img src={item.image_url} width={80} />
-          <div>
-            <h3>{item.name}</h3>
-            <p>¥{item.price}</p>
+          <img
+            src={item.image_url}
+            width={120}
+            style={{ borderRadius: 12, boxShadow: "0 5px 15px rgba(0,0,0,0.1)" }}
+          />
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <h3 style={{ fontSize: 20, fontWeight: 400 }}>{item.name}</h3>
+            <p style={{ fontSize: 18, fontWeight: 300 }}>¥{item.price}</p>
           </div>
         </div>
       ))}
@@ -42,11 +46,14 @@ export default function CartPage() {
         <button
           onClick={checkout}
           style={{
-            marginTop: 40,
-            padding: "16px 32px",
+            padding: "16px 48px",
             background: "black",
             color: "white",
+            border: "none",
+            borderRadius: 8,
+            fontSize: 18,
             cursor: "pointer",
+            marginTop: 40,
           }}
         >
           Checkout

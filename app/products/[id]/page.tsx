@@ -11,42 +11,65 @@ export default function ProductPage() {
   const [product, setProduct] = useState<any>(null);
 
   useEffect(() => {
+    console.log("params:", params); // デバッグ用、確認できたら消してOK
+
+    if (!params.id) return;
+
     const loadProduct = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("products")
         .select("*")
         .eq("id", params.id)
         .single();
-      setProduct(data);
+      if (error) {
+        console.error("Supabase fetch error:", error.message);
+      } else {
+        setProduct(data);
+      }
     };
     loadProduct();
-  }, []);
+  }, [params.id]);
 
-  if (!product) return <div style={{ padding: 60 }}>Loading...</div>;
+  if (!product) return <div style={{ padding: 60, fontFamily: "Arial, sans-serif" }}>Loading...</div>;
 
   return (
     <div
       style={{
         padding: "80px",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "60px",
+        display: "flex",
+        flexDirection: "row",
+        gap: "80px",
+        fontFamily: "Arial, sans-serif",
       }}
     >
-      <img src={product.image_url} style={{ width: "100%" }} />
+      <img
+        src={product.image_url}
+        alt={product.name}
+        style={{
+          width: "50%",
+          borderRadius: 16,
+          objectFit: "cover",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+        }}
+      />
 
-      <div>
-        <h1>{product.name}</h1>
-        <p style={{ fontSize: 24 }}>¥{product.price}</p>
-        <p style={{ marginBottom: 40 }}>{product.description}</p>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 30 }}>
+        <h1 style={{ fontSize: 36, fontWeight: 300 }}>{product.name}</h1>
+        <p style={{ fontSize: 24, fontWeight: 300 }}>¥{product.price}</p>
+        <p style={{ fontSize: 16, fontWeight: 300, lineHeight: 1.6 }}>{product.description}</p>
+
         <button
           onClick={() => addToCart(product)}
           style={{
-            padding: "14px 28px",
+            marginTop: 40,
+            padding: "16px 32px",
             background: "black",
             color: "white",
             border: "none",
+            borderRadius: 8,
+            fontSize: 16,
             cursor: "pointer",
+            width: "fit-content",
           }}
         >
           Add to Cart
