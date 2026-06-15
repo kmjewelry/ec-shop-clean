@@ -135,7 +135,7 @@ export default function Footer() {
         <div className="km-footer-bottom">
           <span className="km-footer-copy">© 2026 KM Jewelry. All rights reserved.</span>
           <div className="km-footer-gold-line" />
-          <span className="km-footer-copy">Handcrafted in Japan</span>
+          <span className="km-footer-copy">Made in Japan</span>
         </div>
       </footer>
     </>
