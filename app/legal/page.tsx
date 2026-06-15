@@ -32,7 +32,8 @@ export default function LegalPage() {
 
         <section>
           <h2 className="font-semibold">メールアドレス</h2>
-          <p>info@kmjewelry.jp</p>
+          <p>kmjewelryjp@gmail.com
+          </p>
         </section>
 
         <section>
