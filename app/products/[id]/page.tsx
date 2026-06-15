@@ -256,7 +256,7 @@ export default function ProductPage() {
               <div className="km-pd-details">
                 <div className="km-pd-detail-row">
                   <span className="km-pd-detail-label">Material</span>
-                  <span className="km-pd-detail-val">14K Gold / Sterling Silver</span>
+                  <span className="km-pd-detail-val">Gold / Platinum / Sterling Silver</span>
                 </div>
                 <div className="km-pd-detail-row">
                   <span className="km-pd-detail-label">Shipping</span>

@@ -345,8 +345,8 @@ export default function Home() {
         {/* PROMISE */}
         <section className="km-promise">
           <div className="km-promise-item">
-            <div className="km-promise-num">14K</div>
-            <div className="km-promise-label">Gold & Silver</div>
+      
+            <div className="km-promise-label">Gold, Platinum & Silver</div>
             <p className="km-promise-desc">Only the finest metals, sourced responsibly for lasting beauty.</p>
           </div>
           <div className="km-promise-item">

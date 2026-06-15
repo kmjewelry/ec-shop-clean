@@ -232,7 +232,7 @@ export default function About() {
               KM Jewelry was born from a deep love of craft and a belief that the objects we wear every day should be beautiful, meaningful, and made to last. Each piece begins as a hand-drawn sketch and is shaped slowly, deliberately, into something timeless.
             </p>
             <p className="km-about-intro-body" style={{ marginTop: 20 }}>
-              We work with 14K gold and sterling silver, sourced with care, and take pride in every detail — from the curve of a ring to the weight of a chain. Nothing leaves our hands until it feels exactly right.
+              We work with gold, platinum and sterling silver, sourced with care, and take pride in every detail — from the curve of a ring to the weight of a chain. Nothing leaves our hands until it feels exactly right.
             </p>
           </div>
           <div className="km-about-intro-img">
@@ -264,7 +264,7 @@ export default function About() {
               {
                 num: "03",
                 title: "Honest Materials",
-                desc: "Only 14K gold and sterling silver. We source responsibly and never cut corners on the materials that touch your skin.",
+                desc: "Only gold, platinum and sterling silver. We source responsibly and never cut corners on the materials that touch your skin.",
               },
             ].map((v) => (
               <div key={v.num} className="km-about-value-item">
