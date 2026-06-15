@@ -9,10 +9,9 @@ export default function ProductPage() {
   const params = useParams();
   const { addToCart } = useCart();
   const [product, setProduct] = useState<any>(null);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    console.log("params:", params); // デバッグ用、確認できたら消してOK
-
     if (!params.id) return;
 
     const loadProduct = async () => {
@@ -29,6 +28,12 @@ export default function ProductPage() {
     };
     loadProduct();
   }, [params.id]);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   if (!product) return <div style={{ padding: 60, fontFamily: "Arial, sans-serif" }}>Loading...</div>;
 
@@ -59,20 +64,22 @@ export default function ProductPage() {
         <p style={{ fontSize: 16, fontWeight: 300, lineHeight: 1.6 }}>{product.description}</p>
 
         <button
-          onClick={() => addToCart(product)}
+          onClick={handleAddToCart}
           style={{
             marginTop: 40,
             padding: "16px 32px",
-            background: "black",
+            background: added ? "#2e7d32" : "black",
             color: "white",
             border: "none",
             borderRadius: 8,
             fontSize: 16,
             cursor: "pointer",
             width: "fit-content",
+            transition: "background 0.3s, transform 0.2s",
+            transform: added ? "scale(1.05)" : "scale(1)",
           }}
         >
-          Add to Cart
+          {added ? "✓ Added to Cart" : "Add to Cart"}
         </button>
       </div>
     </div>
