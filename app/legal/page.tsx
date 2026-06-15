@@ -13,7 +13,7 @@ export default function LegalPage() {
 
         <section>
           <h2 className="font-semibold">運営責任者</h2>
-          <p>村田 幸大郎</p>
+          <p>※請求があった場合には遅滞なく開示いたします。</p>
         </section>
 
         <section>

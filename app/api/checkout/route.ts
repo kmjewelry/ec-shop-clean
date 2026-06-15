@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
         images: [item.image_url],
       },
       unit_amount: item.price,
+      tax_behavior: "inclusive",
     },
     quantity: item.quantity,
   }));
@@ -27,6 +28,11 @@ export async function POST(req: NextRequest) {
     },
     phone_number_collection: {
       enabled: true,
+    },
+    custom_text: {
+      submit: {
+        message: "表示金額には消費税が含まれています。",
+      },
     },
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
