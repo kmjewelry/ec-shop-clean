@@ -47,7 +47,6 @@ export default function ProductPage() {
           min-height: 100vh;
         }
 
-        /* BREADCRUMB */
         .km-breadcrumb {
           padding: 120px 60px 0;
           display: flex;
@@ -66,7 +65,6 @@ export default function ProductPage() {
         .km-breadcrumb a:hover { color: #B8956A; }
         .km-breadcrumb-sep { color: #CCC; }
 
-        /* LOADING */
         .km-pd-loading {
           display: flex;
           align-items: center;
@@ -79,7 +77,6 @@ export default function ProductPage() {
           letter-spacing: 0.06em;
         }
 
-        /* LAYOUT */
         .km-pd-layout {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -89,7 +86,6 @@ export default function ProductPage() {
           margin: 0 auto;
         }
 
-        /* IMAGE */
         .km-pd-img-wrap {
           position: relative;
           overflow: hidden;
@@ -102,7 +98,6 @@ export default function ProductPage() {
           object-fit: cover;
         }
 
-        /* INFO */
         .km-pd-info {
           display: flex;
           flex-direction: column;
@@ -130,14 +125,26 @@ export default function ProductPage() {
           background: #B8956A;
           margin-bottom: 24px;
         }
+
+        /* ✅ 税込価格エリア */
+        .km-pd-price-wrap {
+          margin-bottom: 32px;
+        }
         .km-pd-price {
           font-family: 'Cormorant Garamond', serif;
           font-size: 28px;
           font-weight: 300;
           letter-spacing: 0.04em;
           color: #1A1A1A;
-          margin-bottom: 32px;
+          margin: 0 0 6px;
         }
+        .km-pd-tax {
+          font-size: 12px;
+          font-weight: 300;
+          letter-spacing: 0.1em;
+          color: #999;
+        }
+
         .km-pd-desc {
           font-size: 15px;
           font-weight: 300;
@@ -146,7 +153,14 @@ export default function ProductPage() {
           margin-bottom: 48px;
         }
 
-        /* ADD TO CART */
+        /* ✅ ボタンエリア */
+        .km-pd-btn-group {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          max-width: 360px;
+        }
+
         .km-pd-btn {
           display: inline-flex;
           align-items: center;
@@ -161,7 +175,6 @@ export default function ProductPage() {
           cursor: pointer;
           padding: 18px 48px;
           width: 100%;
-          max-width: 360px;
           transition: background 0.4s, transform 0.2s;
         }
         .km-pd-btn.idle {
@@ -177,7 +190,36 @@ export default function ProductPage() {
           transform: scale(1.02);
         }
 
-        /* DETAILS */
+        /* ✅ カートを見るボタン */
+        .km-pd-cart-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          font-family: 'Inter', sans-serif;
+          font-size: 12px;
+          font-weight: 400;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          text-decoration: none;
+          padding: 17px 48px;
+          width: 100%;
+          border: 1px solid #1A1A1A;
+          color: #1A1A1A;
+          background: transparent;
+          transition: background 0.4s, color 0.4s, border-color 0.4s, opacity 0.4s;
+          opacity: 0;
+          pointer-events: none;
+        }
+        .km-pd-cart-link.visible {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .km-pd-cart-link:hover {
+          background: #1A1A1A;
+          color: #FAFAF8;
+        }
+
         .km-pd-details {
           margin-top: 48px;
           padding-top: 40px;
@@ -211,11 +253,11 @@ export default function ProductPage() {
             padding: 32px 24px 80px;
           }
           .km-breadcrumb { padding: 100px 24px 0; }
+          .km-pd-btn-group { max-width: 100%; }
         }
       `}</style>
 
       <div className="km-pd-root">
-        {/* BREADCRUMB */}
         <nav className="km-breadcrumb">
           <Link href="/">Home</Link>
           <span className="km-breadcrumb-sep">—</span>
@@ -232,27 +274,41 @@ export default function ProductPage() {
           <div className="km-pd-loading">Loading…</div>
         ) : (
           <div className="km-pd-layout">
-            {/* IMAGE */}
             <div className="km-pd-img-wrap">
               <img src={product.image_url} alt={product.name} />
             </div>
 
-            {/* INFO */}
             <div className="km-pd-info">
               <p className="km-pd-eyebrow">KM Jewelry</p>
               <h1 className="km-pd-name">{product.name}</h1>
               <div className="km-pd-divider" />
-              <p className="km-pd-price">¥{product.price.toLocaleString()}</p>
+
+              {/* ✅ 税込表示 */}
+              <div className="km-pd-price-wrap">
+                <p className="km-pd-price">¥{product.price.toLocaleString()}</p>
+                <p className="km-pd-tax">税込（消費税10%）</p>
+              </div>
+
               <p className="km-pd-desc">{product.description}</p>
 
-              <button
-                onClick={handleAddToCart}
-                className={`km-pd-btn ${added ? "added" : "idle"}`}
-              >
-                {added ? "✓ Added to Cart" : "Add to Cart"}
-              </button>
+              {/* ✅ ボタングループ */}
+              <div className="km-pd-btn-group">
+                <button
+                  onClick={handleAddToCart}
+                  className={`km-pd-btn ${added ? "added" : "idle"}`}
+                >
+                  {added ? "✓ Added to Cart" : "Add to Cart"}
+                </button>
 
-              {/* DETAILS */}
+                {/* カートを見るボタン：追加後にフェードイン */}
+                <Link
+                  href="/cart"
+                  className={`km-pd-cart-link ${added ? "visible" : ""}`}
+                >
+                  View Cart →
+                </Link>
+              </div>
+
               <div className="km-pd-details">
                 <div className="km-pd-detail-row">
                   <span className="km-pd-detail-label">Shipping</span>
