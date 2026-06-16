@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -48,31 +47,14 @@ export default function Home() {
           color: #B8956A;
           margin-bottom: 24px;
         }
-
-        /* ロゴ + テキストの横並びレイアウト */
-        .km-hero-brand {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-        .km-hero-logo {
-          width: 64px;
-          height: 64px;
-          object-fit: contain;
-          filter: brightness(0) invert(1);
-          opacity: 0.92;
-        }
         .km-hero-title {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(52px, 8vw, 96px);
           font-weight: 300;
           line-height: 1.05;
           letter-spacing: 0.04em;
-          margin: 0;
+          margin: 0 0 20px;
         }
-
         .km-hero-sub {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
@@ -274,33 +256,20 @@ export default function Home() {
           .km-craft { grid-template-columns: 1fr; }
           .km-craft-text { padding: 60px 32px; }
           .km-promise { grid-template-columns: 1fr; padding: 60px 32px; gap: 40px; }
-          .km-hero-logo { width: 48px; height: 48px; }
         }
       `}</style>
 
       <div className="km-root">
 
-        {/* HERO */}
         <section className="km-hero">
           <img
-            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1800&q=80
-            "
+            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1800&q=80"
             alt="KM Jewelry"
             className="km-hero-img"
           />
           <div className="km-hero-content">
             <p className="km-eyebrow">Fine Jewelry — Made in Japan</p>
-
-            {/* ✅ ロゴ + タイトル横並び */}
-            <div className="km-hero-brand">
-              <img
-                src="/logo.png"
-                alt="KM Jewelry Logo"
-                className="km-hero-logo"
-              />
-              <h1 className="km-hero-title">KM Jewelry</h1>
-            </div>
-
+            <h1 className="km-hero-title">KM Jewelry</h1>
             <p className="km-hero-sub">Everyday Brilliance</p>
             <Link href="/products" className="km-btn-primary">
               Explore Collection
@@ -312,7 +281,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* COLLECTIONS */}
         <section className="km-collections">
           <div className="km-section-header">
             <h2 className="km-section-title">Collections</h2>
@@ -352,7 +320,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CRAFT */}
         <section className="km-craft">
           <div className="km-craft-img-wrap">
             <img
@@ -374,7 +341,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PROMISE */}
         <section className="km-promise">
           <div className="km-promise-item">
             <div className="km-promise-num">GIA</div>
