@@ -65,7 +65,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold mb-2">
             お問い合わせ
           </h2>
-          <p>kmjewelryjo@gmail.com</p>
+          <p>kmjewelryjp@gmail.com</p>
         </section>
       </div>
     </main>

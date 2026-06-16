@@ -278,14 +278,14 @@ export default function Home() {
         {/* HERO */}
         <section className="km-hero">
           <img
-            src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=1800&q=80"
+            src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=1800&q=80"
             alt="KM Jewelry"
             className="km-hero-img"
           />
           <div className="km-hero-content">
-            <p className="km-eyebrow">Handcrafted in Japan</p>
+            <p className="km-eyebrow">Fine Jewelry — Made in Japan</p>
             <h1 className="km-hero-title">KM Jewelry</h1>
-            <p className="km-hero-sub">Fine Handmade Jewelry</p>
+            <p className="km-hero-sub">Everyday Brilliance</p>
             <Link href="/products" className="km-btn-primary">
               Explore Collection
             </Link>
@@ -304,10 +304,26 @@ export default function Home() {
           </div>
           <div className="km-collections-grid">
             {[
-              { href: "/collections/rings", label: "Rings", img: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80" },
-              { href: "/collections/necklaces", label: "Necklaces", img: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80" },
-              { href: "/collections/bracelets", label: "Bracelets", img: "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&q=80" },
-              { href: "/collections/earrings", label: "Earrings", img: "https://images.unsplash.com/photo-1588444650700-6c2e8d4b0a3a?w=800&q=80" },
+              {
+                href: "/collections/rings",
+                label: "Rings",
+                img: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?w=800&q=80",
+              },
+              {
+                href: "/collections/necklaces",
+                label: "Necklaces",
+                img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=800&q=80",
+              },
+              {
+                href: "/collections/bracelets",
+                label: "Bracelets",
+                img: "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=800&q=80",
+              },
+              {
+                href: "/collections/earrings",
+                label: "Earrings",
+                img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80",
+              },
             ].map((c) => (
               <Link key={c.label} href={c.href} className="km-collection-item">
                 <img src={c.img} alt={c.label} />
@@ -324,17 +340,17 @@ export default function Home() {
         <section className="km-craft">
           <div className="km-craft-img-wrap">
             <img
-              src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1000&q=80"
-              alt="Our Craft"
+              src="https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?w=1000&q=80"
+              alt="Our Philosophy"
             />
           </div>
           <div className="km-craft-text">
             <p className="km-eyebrow">Our Philosophy</p>
             <h2 className="km-craft-heading">
-              Crafted with<br />Intention
+              Curated with<br />Intention
             </h2>
             <p className="km-craft-body">
-              Every piece at KM Jewelry begins as a hand-drawn sketch and ends as a wearable work of art. We source only the finest materials, letting natural beauty guide each design toward something timeless.
+              Guided by the expertise of a GIA Graduate Gemologist, every piece at KM Jewelry is selected for its beauty, quality, and lasting value. Made in Japan, delivered with care — for the moments that matter most.
             </p>
             <Link href="/about" className="km-btn-ghost">
               Our Story
@@ -345,14 +361,19 @@ export default function Home() {
         {/* PROMISE */}
         <section className="km-promise">
           <div className="km-promise-item">
-      
-            <div className="km-promise-label">Gold, Platinum & Silver</div>
-            <p className="km-promise-desc">Only the finest metals, sourced responsibly for lasting beauty.</p>
+            <div className="km-promise-num">GIA</div>
+            <div className="km-promise-label">Certified Expertise</div>
+            <p className="km-promise-desc">Curated by a GIA Graduate Gemologist for quality you can trust.</p>
           </div>
           <div className="km-promise-item">
             <div className="km-promise-num">∞</div>
             <div className="km-promise-label">Timeless Design</div>
-            <p className="km-promise-desc">Designs made to be worn for a lifetime, not a season.</p>
+            <p className="km-promise-desc">Pieces made to be worn for a lifetime, not a season.</p>
+          </div>
+          <div className="km-promise-item">
+            <div className="km-promise-num">JP</div>
+            <div className="km-promise-label">Made in Japan</div>
+            <p className="km-promise-desc">Rooted in Japan's tradition of precision, care, and refined beauty.</p>
           </div>
         </section>
 
