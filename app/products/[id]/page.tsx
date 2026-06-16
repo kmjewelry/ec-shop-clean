@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function ProductPage() {
   const params = useParams();
-  const { addToCart } = useCart();
+  const { addToCart, addToCart } = useCart();
   const [product, setProduct] = useState<any>(null);
   const [added, setAdded] = useState(false);
 
@@ -286,7 +286,7 @@ export default function ProductPage() {
               {/* ✅ 税込表示 */}
               <div className="km-pd-price-wrap">
                 <p className="km-pd-price">¥{product.price.toLocaleString()}</p>
-                <p className="km-pd-tax">税込（消費税10%）</p>
+                <p className="km-pd-tax">(税込)</p>
               </div>
 
               <p className="km-pd-desc">{product.description}</p>
@@ -303,7 +303,7 @@ export default function ProductPage() {
                 {/* カートを見るボタン：追加後にフェードイン */}
                 <Link
                   href="/cart"
-                  className={`km-pd-cart-link ${added ? "visible" : ""}`}
+                  className={`km-pd-cart-link ${cartCount > 0 ? "visible" : ""}`}
                 >
                   View Cart →
                 </Link>
