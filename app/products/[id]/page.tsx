@@ -255,10 +255,6 @@ export default function ProductPage() {
               {/* DETAILS */}
               <div className="km-pd-details">
                 <div className="km-pd-detail-row">
-                  <span className="km-pd-detail-label">Material</span>
-                  <span className="km-pd-detail-val">Gold / Platinum / Sterling Silver</span>
-                </div>
-                <div className="km-pd-detail-row">
                   <span className="km-pd-detail-label">Shipping</span>
                   <span className="km-pd-detail-val">3〜7営業日以内に発送</span>
                 </div>
