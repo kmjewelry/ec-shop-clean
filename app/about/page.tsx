@@ -1,3 +1,5 @@
+"use client";
+
 export default function About() {
   return (
     <>
@@ -213,7 +215,7 @@ export default function About() {
         <section className="km-about-hero">
           <img
             src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1800&q=80"
-            alt="KM Jewelry Craft"
+            alt="KM Jewelry"
           />
           <div className="km-about-hero-content">
             <p className="km-about-eyebrow">Our Story</p>
@@ -225,14 +227,14 @@ export default function About() {
         <section className="km-about-intro">
           <div>
             <h2 className="km-about-intro-heading">
-              Jewelry made with<br /><em>intention</em>
+              Jewelry that makes your<br /><em>everyday shine</em>
             </h2>
             <div className="km-about-gold-line" />
             <p className="km-about-intro-body">
-              KM Jewelry was born from a deep love of craft and a belief that the objects we wear every day should be beautiful, meaningful, and made to last. Each piece begins as a hand-drawn sketch and is shaped slowly, deliberately, into something timeless.
+              KM Jewelryは、日本からお届けするMade in Japanのジュエリーブランドです。世界最高峰の宝石学機関として知られるGIA（米国宝石学会）のGraduate Gemologist（GG）資格取得者が、品質と信頼を軸にセレクトした一品をお届けします。
             </p>
             <p className="km-about-intro-body" style={{ marginTop: 20 }}>
-              We work with gold, platinum and sterling silver, sourced with care, and take pride in every detail — from the curve of a ring to the weight of a chain. Nothing leaves our hands until it feels exactly right.
+              「世の中の人の毎日を、少しでも輝かせたい」——そんな想いを胸に、日常に寄り添うジュエリーを丁寧にお届けしています。特別な日だけでなく、普段の自分をもっと好きになれるような、そんな一点をお探しの方へ。
             </p>
           </div>
           <div className="km-about-intro-img">
@@ -253,18 +255,18 @@ export default function About() {
             {[
               {
                 num: "01",
-                title: "Craftsmanship",
-                desc: "Every piece is shaped by hand, never mass-produced. We believe in slow making — taking the time to get it right.",
+                title: "GIA認定の品質",
+                desc: "世界的に権威ある宝石学機関GIAのGG資格保持者が、素材の品質と信頼性を厳しくチェック。確かな目利きで選ばれたジュエリーのみをお届けします。",
               },
               {
                 num: "02",
-                title: "Timeless Design",
-                desc: "We design for longevity, not trends. Our pieces are meant to be worn for decades and passed down through generations.",
+                title: "Made in Japan",
+                desc: "日本の高い品質基準のもとでお届けするジュエリー。細部へのこだわりと丁寧な仕上がりは、日本ブランドとしての誇りです。",
               },
               {
                 num: "03",
-                title: "Honest Materials",
-                desc: "Only gold, platinum and sterling silver. We source responsibly and never cut corners on the materials that touch your skin.",
+                title: "日常に寄り添う輝き",
+                desc: "特別なシーンだけでなく、毎日の生活の中で自然と輝けるデザインを大切にしています。あなたの毎日を少しだけ豊かに。",
               },
             ].map((v) => (
               <div key={v.num} className="km-about-value-item">
@@ -281,18 +283,21 @@ export default function About() {
           <div className="km-about-maker-img">
             <img
               src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=80"
-              alt="The Maker"
+              alt="KM Jewelry"
             />
           </div>
           <div className="km-about-maker-text">
-            <p className="km-about-maker-eyebrow">The Maker</p>
+            <p className="km-about-maker-eyebrow">Our Commitment</p>
             <h2 className="km-about-maker-heading">
-              村田 幸大郎
+              確かな知識と、<br />誠実なものづくり
             </h2>
             <p className="km-about-maker-body">
-              KM Jewelry is the work of one person — designed, shaped, and finished entirely by hand. I started making jewelry as a way to slow down and connect with something real. Every piece I make carries a piece of that intention.
+              GIAのGraduate Gemologist（GG）は、ダイヤモンド・カラーストーン・真珠など、あらゆる宝石を科学的かつ国際的な基準で鑑別できる、世界が認める最高峰の資格です。
             </p>
-            <p className="km-about-maker-sig">— Kodairo Murata</p>
+            <p className="km-about-maker-body" style={{ marginTop: 16 }}>
+              KM Jewelryは、その専門知識を活かし、品質に妥協しないジュエリーを日本からお届けします。あなたの大切な毎日に、本物の輝きを。
+            </p>
+            <p className="km-about-maker-sig">— KM Jewelry</p>
           </div>
         </section>
 
