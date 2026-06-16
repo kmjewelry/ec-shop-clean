@@ -1,12 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
+
+const CATEGORIES = [
+  { label: "All", value: "" },
+  { label: "Rings", value: "rings" },
+  { label: "Necklaces", value: "necklaces" },
+  { label: "Bracelets", value: "bracelets" },
+  { label: "Earrings", value: "earrings" },
+];
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,6 +30,20 @@ export default function ProductsPage() {
     };
     fetchProducts();
   }, []);
+
+  const filtered = useMemo(() => {
+    return products.filter((p) => {
+      const q = query.toLowerCase();
+      const matchesQuery =
+        !q ||
+        p.name?.toLowerCase().includes(q) ||
+        p.stone?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q);
+      const matchesCategory =
+        !activeCategory || p.category === activeCategory;
+      return matchesQuery && matchesCategory;
+    });
+  }, [products, query, activeCategory]);
 
   return (
     <>
@@ -35,7 +59,7 @@ export default function ProductsPage() {
 
         /* PAGE HEADER */
         .km-page-hero {
-          padding: 140px 60px 80px;
+          padding: 140px 60px 60px;
           border-bottom: 1px solid #E8E4DF;
         }
         .km-page-eyebrow {
@@ -59,12 +83,88 @@ export default function ProductsPage() {
           font-size: 18px;
           font-weight: 300;
           color: #888;
-          margin: 0;
+          margin: 0 0 40px;
+        }
+
+        /* SEARCH */
+        .km-search-wrap {
+          position: relative;
+          max-width: 560px;
+        }
+        .km-search-icon {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #B8956A;
+          font-size: 16px;
+          pointer-events: none;
+        }
+        .km-search-input {
+          width: 100%;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #D4C9BE;
+          padding: 12px 0 12px 28px;
+          font-family: 'Inter', sans-serif;
+          font-size: 14px;
+          font-weight: 300;
+          color: #1A1A1A;
+          outline: none;
+          transition: border-color 0.3s;
+          box-sizing: border-box;
+        }
+        .km-search-input:focus {
+          border-bottom-color: #B8956A;
+        }
+        .km-search-input::placeholder {
+          color: #C0B8B0;
+          font-weight: 300;
+        }
+
+        /* CATEGORY TABS */
+        .km-filters {
+          padding: 32px 60px;
+          border-bottom: 1px solid #E8E4DF;
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .km-filter-tab {
+          font-family: 'Inter', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          padding: 8px 20px;
+          border: 1px solid #E8E4DF;
+          background: transparent;
+          color: #888;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .km-filter-tab:hover {
+          border-color: #B8956A;
+          color: #B8956A;
+        }
+        .km-filter-tab.active {
+          background: #1A1A1A;
+          border-color: #1A1A1A;
+          color: #FAFAF8;
+        }
+
+        /* RESULTS COUNT */
+        .km-results-count {
+          font-size: 12px;
+          font-weight: 300;
+          color: #999;
+          letter-spacing: 0.05em;
+          padding: 24px 60px 0;
         }
 
         /* GRID */
         .km-products-section {
-          padding: 80px 60px 120px;
+          padding: 40px 60px 120px;
         }
         .km-products-grid {
           display: grid;
@@ -123,7 +223,6 @@ export default function ProductsPage() {
           opacity: 1;
           transform: translateY(0);
         }
-
         .km-product-info {
           display: flex;
           justify-content: space-between;
@@ -144,6 +243,18 @@ export default function ProductsPage() {
           white-space: nowrap;
         }
 
+        /* EMPTY */
+        .km-empty {
+          grid-column: 1 / -1;
+          text-align: center;
+          padding: 80px 0;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: 22px;
+          color: #AAA;
+          letter-spacing: 0.04em;
+        }
+
         /* LOADING */
         .km-loading {
           display: flex;
@@ -160,7 +271,9 @@ export default function ProductsPage() {
         @media (max-width: 900px) {
           .km-products-grid { grid-template-columns: repeat(2, 1fr); }
           .km-page-hero { padding: 120px 24px 60px; }
-          .km-products-section { padding: 60px 24px 80px; }
+          .km-filters { padding: 24px; }
+          .km-results-count { padding: 20px 24px 0; }
+          .km-products-section { padding: 32px 24px 80px; }
         }
         @media (max-width: 560px) {
           .km-products-grid { grid-template-columns: 1fr; }
@@ -174,7 +287,39 @@ export default function ProductsPage() {
           <p className="km-page-eyebrow">KM Jewelry</p>
           <h1 className="km-page-title">Our Collection</h1>
           <p className="km-page-sub">Fine jewelry for your everyday moments</p>
+
+          {/* SEARCH */}
+          <div className="km-search-wrap">
+            <span className="km-search-icon">🔍</span>
+            <input
+              className="km-search-input"
+              type="text"
+              placeholder="商品名・石の名前で検索（例：ダイヤモンド、エメラルド）"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
         </div>
+
+        {/* CATEGORY TABS */}
+        <div className="km-filters">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.value}
+              className={`km-filter-tab${activeCategory === cat.value ? " active" : ""}`}
+              onClick={() => setActiveCategory(cat.value)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* RESULTS COUNT */}
+        {!loading && (
+          <p className="km-results-count">
+            {filtered.length}件の商品
+          </p>
+        )}
 
         {/* GRID */}
         <section className="km-products-section">
@@ -182,24 +327,28 @@ export default function ProductsPage() {
             <div className="km-loading">Loading…</div>
           ) : (
             <div className="km-products-grid">
-              {products.map((product) => (
-                <Link
-                  key={product.id}
-                  href={`/products/${product.id}`}
-                  className="km-product-card"
-                >
-                  <div className="km-product-img-wrap">
-                    <img src={product.image_url} alt={product.name} />
-                    <div className="km-product-overlay">
-                      <span className="km-product-view">View Piece</span>
+              {filtered.length === 0 ? (
+                <p className="km-empty">該当する商品が見つかりませんでした</p>
+              ) : (
+                filtered.map((product) => (
+                  <Link
+                    key={product.id}
+                    href={`/products/${product.id}`}
+                    className="km-product-card"
+                  >
+                    <div className="km-product-img-wrap">
+                      <img src={product.image_url} alt={product.name} />
+                      <div className="km-product-overlay">
+                        <span className="km-product-view">View Piece</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="km-product-info">
-                    <span className="km-product-name">{product.name}</span>
-                    <span className="km-product-price">¥{product.price.toLocaleString()}</span>
-                  </div>
-                </Link>
-              ))}
+                    <div className="km-product-info">
+                      <span className="km-product-name">{product.name}</span>
+                      <span className="km-product-price">¥{product.price.toLocaleString()} <span style={{fontSize:11,color:"#aaa"}}>(税込)</span></span>
+                    </div>
+                  </Link>
+                ))
+              )}
             </div>
           )}
         </section>
