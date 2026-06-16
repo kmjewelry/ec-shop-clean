@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function ProductPage() {
   const params = useParams();
-  const { addToCart, addToCart } = useCart();
+  const { addToCart, cartCount } = useCart();
   const [product, setProduct] = useState<any>(null);
   const [added, setAdded] = useState(false);
 
