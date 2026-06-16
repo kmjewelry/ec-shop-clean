@@ -7,12 +7,19 @@ import { useEffect, useState } from "react";
 export default function Header() {
   const { cartCount } = useCart();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // メニュー開閉時にbodyスクロールを制御
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
 
   return (
     <>
@@ -54,11 +61,18 @@ export default function Header() {
           text-decoration: none;
           color: #FAFAF8;
           transition: color 0.4s;
+          z-index: 110;
+          position: relative;
         }
         .km-header.scrolled .km-logo {
           color: #1A1A1A;
         }
+        /* メニューオープン中はロゴを黒に */
+        .km-header.menu-open .km-logo {
+          color: #1A1A1A;
+        }
 
+        /* ── PC ナビ ── */
         .km-nav {
           display: flex;
           align-items: center;
@@ -92,15 +106,9 @@ export default function Header() {
           transform-origin: left;
           transition: transform 0.3s ease;
         }
-        .km-nav-link:hover::after {
-          transform: scaleX(1);
-        }
-        .km-nav-link:hover {
-          color: #B8956A;
-        }
-        .km-header.scrolled .km-nav-link:hover {
-          color: #B8956A;
-        }
+        .km-nav-link:hover::after { transform: scaleX(1); }
+        .km-nav-link:hover { color: #B8956A; }
+        .km-header.scrolled .km-nav-link:hover { color: #B8956A; }
 
         .km-cart-link {
           display: inline-flex;
@@ -115,12 +123,8 @@ export default function Header() {
           color: rgba(250,250,248,0.85);
           transition: color 0.4s;
         }
-        .km-header.scrolled .km-cart-link {
-          color: #1A1A1A;
-        }
-        .km-cart-link:hover {
-          color: #B8956A;
-        }
+        .km-header.scrolled .km-cart-link { color: #1A1A1A; }
+        .km-cart-link:hover { color: #B8956A; }
 
         .km-cart-badge {
           background: #B8956A;
@@ -137,42 +141,136 @@ export default function Header() {
           animation: cart-bounce 0.3s ease;
         }
 
-        /* ヒーロー直下のページでは余白を追加 */
-        .km-header-spacer {
-          height: 72px;
+        .km-header-spacer { height: 72px; }
+
+        /* ── ハンバーガーボタン（スマホのみ表示） ── */
+        .km-hamburger {
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          gap: 5px;
+          width: 36px;
+          height: 36px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          z-index: 110;
+          position: relative;
+          padding: 4px;
+        }
+        .km-hamburger span {
+          display: block;
+          width: 22px;
+          height: 1px;
+          background: #FAFAF8;
+          transition: background 0.4s, transform 0.3s, opacity 0.3s;
+        }
+        .km-header.scrolled .km-hamburger span { background: #1A1A1A; }
+        .km-header.menu-open .km-hamburger span { background: #1A1A1A; }
+
+        /* ✕ アニメーション */
+        .km-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .km-hamburger.open span:nth-child(2) { opacity: 0; }
+        .km-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+        /* ── モバイルメニューオーバーレイ ── */
+        .km-mobile-menu {
+          display: none;
+          position: fixed;
+          inset: 0;
+          z-index: 105;
+          background: rgba(250, 250, 248, 0.98);
+          backdrop-filter: blur(16px);
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 40px;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.35s ease;
+        }
+        .km-mobile-menu.open {
+          opacity: 1;
+          pointer-events: auto;
         }
 
+        .km-mobile-nav-link {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 32px;
+          font-weight: 300;
+          letter-spacing: 0.14em;
+          text-decoration: none;
+          color: #1A1A1A;
+          transition: color 0.3s;
+        }
+        .km-mobile-nav-link:hover { color: #B8956A; }
+
+        .km-mobile-cart-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          font-family: 'Inter', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: #1A1A1A;
+          transition: color 0.3s;
+        }
+        .km-mobile-cart-link:hover { color: #B8956A; }
+
+        /* ── レスポンシブ切り替え ── */
         @media (max-width: 768px) {
           .km-header { padding: 0 24px; }
-          .km-nav { gap: 24px; }
+          .km-nav { display: none; }
+          .km-hamburger { display: flex; }
+          .km-mobile-menu { display: flex; }
         }
       `}</style>
 
-      <header className={`km-header${scrolled ? " scrolled" : ""}`}>
-        <Link href="/" className="km-logo">
+      <header className={`km-header${scrolled ? " scrolled" : ""}${menuOpen ? " menu-open" : ""}`}>
+        <Link href="/" className="km-logo" onClick={() => setMenuOpen(false)}>
           KM Jewelry
         </Link>
 
+        {/* PC ナビ */}
         <nav className="km-nav">
-          <Link href="/products" className="km-nav-link">
-            Products
-          </Link>
-          <Link href="/about" className="km-nav-link">
-            About
-          </Link>
-          <Link href="/contact" className="km-nav-link">
-            Contact
-          </Link>
+          <Link href="/products" className="km-nav-link">Products</Link>
+          <Link href="/about" className="km-nav-link">About</Link>
+          <Link href="/contact" className="km-nav-link">Contact</Link>
           <Link href="/cart" className="km-cart-link">
             Cart
             {cartCount > 0 && (
-              <span key={cartCount} className="km-cart-badge">
-                {cartCount}
-              </span>
+              <span key={cartCount} className="km-cart-badge">{cartCount}</span>
             )}
           </Link>
         </nav>
+
+        {/* ハンバーガーボタン */}
+        <button
+          className={`km-hamburger${menuOpen ? " open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="メニューを開く"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </header>
+
+      {/* モバイルメニューオーバーレイ */}
+      <div className={`km-mobile-menu${menuOpen ? " open" : ""}`}>
+        <Link href="/products" className="km-mobile-nav-link" onClick={() => setMenuOpen(false)}>Products</Link>
+        <Link href="/about" className="km-mobile-nav-link" onClick={() => setMenuOpen(false)}>About</Link>
+        <Link href="/contact" className="km-mobile-nav-link" onClick={() => setMenuOpen(false)}>Contact</Link>
+        <Link href="/cart" className="km-mobile-cart-link" onClick={() => setMenuOpen(false)}>
+          Cart
+          {cartCount > 0 && (
+            <span key={cartCount} className="km-cart-badge">{cartCount}</span>
+          )}
+        </Link>
+      </div>
     </>
   );
 }
