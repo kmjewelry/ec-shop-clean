@@ -209,20 +209,6 @@ export default function About() {
         }
       `}</style>
 
-      <div className="km-about-root">
-
-        {/* HERO */}
-        <section className="km-about-hero">
-          <img
-            src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1800&q=80"
-            alt="KM Jewelry"
-          />
-          <div className="km-about-hero-content">
-            <p className="km-about-eyebrow">Our Story</p>
-            <h1 className="km-about-hero-title">About KM Jewelry</h1>
-          </div>
-        </section>
-
         {/* INTRO */}
         <section className="km-about-intro">
           <div>

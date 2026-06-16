@@ -317,7 +317,7 @@ export default function Home() {
               {
                 href: "/collections/bracelets",
                 label: "Bracelets",
-                img: "https://images.unsplash.com/photo-1573408301185-9519f94816b5?w=800&q=80",
+                img: ""https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"",
               },
               {
                 href: "/collections/earrings",
