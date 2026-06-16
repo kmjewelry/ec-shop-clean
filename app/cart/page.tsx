@@ -15,7 +15,13 @@ export default function CartPage() {
     window.location.href = data.url;
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const SHIPPING_THRESHOLD = 11000;
+  const SHIPPING_FEE = 600;
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = subtotal >= SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
+  const total = subtotal + shipping;
+  const remaining = SHIPPING_THRESHOLD - subtotal;
 
   return (
     <>
@@ -29,7 +35,6 @@ export default function CartPage() {
           min-height: 100vh;
         }
 
-        /* HEADER */
         .km-cart-hero {
           padding: 140px 60px 60px;
           border-bottom: 1px solid #E8E4DF;
@@ -50,7 +55,72 @@ export default function CartPage() {
           line-height: 1.1;
         }
 
-        /* LAYOUT */
+        /* 送料無料バナー */
+        .km-shipping-banner {
+          margin: 0 60px;
+          padding: 14px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          font-size: 12px;
+          font-weight: 300;
+          letter-spacing: 0.12em;
+          border-bottom: 1px solid #E8E4DF;
+          color: #666;
+        }
+        .km-shipping-banner-dot {
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background: #B8956A;
+          flex-shrink: 0;
+        }
+        .km-shipping-banner strong {
+          color: #B8956A;
+          font-weight: 400;
+        }
+
+        /* 送料無料プログレスバー */
+        .km-shipping-progress {
+          margin: 0 60px;
+          padding: 20px 0 0;
+          border-bottom: 1px solid #E8E4DF;
+          padding-bottom: 20px;
+        }
+        .km-shipping-progress-text {
+          font-size: 12px;
+          font-weight: 300;
+          letter-spacing: 0.08em;
+          color: #888;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+        .km-shipping-progress-text strong {
+          color: #1A1A1A;
+          font-weight: 400;
+        }
+        .km-shipping-progress-bar-wrap {
+          height: 2px;
+          background: #E8E4DF;
+          border-radius: 2px;
+          overflow: hidden;
+        }
+        .km-shipping-progress-bar {
+          height: 100%;
+          background: #B8956A;
+          border-radius: 2px;
+          transition: width 0.5s ease;
+        }
+        .km-shipping-free-msg {
+          font-size: 12px;
+          font-weight: 300;
+          letter-spacing: 0.1em;
+          color: #2D6A4F;
+          text-align: center;
+          margin-top: 10px;
+        }
+
         .km-cart-layout {
           display: grid;
           grid-template-columns: 1fr 380px;
@@ -61,7 +131,6 @@ export default function CartPage() {
           align-items: start;
         }
 
-        /* EMPTY */
         .km-cart-empty {
           grid-column: 1 / -1;
           display: flex;
@@ -91,7 +160,6 @@ export default function CartPage() {
         }
         .km-cart-empty-link:hover { color: #B8956A; }
 
-        /* ITEMS */
         .km-cart-items {
           display: flex;
           flex-direction: column;
@@ -105,9 +173,7 @@ export default function CartPage() {
           padding: 28px 0;
           border-bottom: 1px solid #E8E4DF;
         }
-        .km-cart-item:first-child {
-          border-top: 1px solid #E8E4DF;
-        }
+        .km-cart-item:first-child { border-top: 1px solid #E8E4DF; }
         .km-cart-item-img {
           width: 100px;
           aspect-ratio: 3/4;
@@ -175,7 +241,6 @@ export default function CartPage() {
           transition: color 0.2s;
         }
         .km-cart-remove:hover { color: #c0392b; }
-
         .km-cart-item-subtotal {
           font-family: 'Cormorant Garamond', serif;
           font-size: 20px;
@@ -184,7 +249,6 @@ export default function CartPage() {
           white-space: nowrap;
         }
 
-        /* SUMMARY */
         .km-cart-summary {
           background: #F5F2EE;
           padding: 40px;
@@ -206,6 +270,10 @@ export default function CartPage() {
           color: #666;
           margin-bottom: 14px;
         }
+        .km-summary-shipping-free {
+          color: #2D6A4F;
+          font-weight: 400;
+        }
         .km-summary-divider {
           height: 1px;
           background: #E8E4DF;
@@ -215,7 +283,7 @@ export default function CartPage() {
           display: flex;
           justify-content: space-between;
           align-items: baseline;
-          margin-bottom: 32px;
+          margin-bottom: 8px;
         }
         .km-summary-total-label {
           font-size: 11px;
@@ -227,6 +295,13 @@ export default function CartPage() {
           font-family: 'Cormorant Garamond', serif;
           font-size: 28px;
           font-weight: 300;
+        }
+        .km-summary-tax-note {
+          font-size: 11px;
+          color: #AAA;
+          text-align: right;
+          margin-bottom: 28px;
+          letter-spacing: 0.06em;
         }
         .km-checkout-btn {
           width: 100%;
@@ -258,6 +333,8 @@ export default function CartPage() {
             padding: 40px 24px 80px;
           }
           .km-cart-hero { padding: 120px 24px 48px; }
+          .km-shipping-banner { margin: 0 24px; }
+          .km-shipping-progress { margin: 0 24px; }
         }
       `}</style>
 
@@ -266,6 +343,34 @@ export default function CartPage() {
           <p className="km-cart-eyebrow">KM Jewelry</p>
           <h1 className="km-cart-title">Shopping Cart</h1>
         </div>
+
+        {/* 送料無料バナー（常時表示） */}
+        <div className="km-shipping-banner">
+          <span className="km-shipping-banner-dot" />
+          <span><strong>¥11,000（税込）</strong>以上のご注文で送料無料</span>
+          <span className="km-shipping-banner-dot" />
+        </div>
+
+        {/* 送料無料プログレスバー（カートに商品がある時のみ） */}
+        {cart.length > 0 && (
+          <div className="km-shipping-progress">
+            {subtotal >= SHIPPING_THRESHOLD ? (
+              <p className="km-shipping-free-msg">✓ 送料無料が適用されています</p>
+            ) : (
+              <>
+                <p className="km-shipping-progress-text">
+                  送料無料まであと <strong>¥{remaining.toLocaleString()}</strong>
+                </p>
+                <div className="km-shipping-progress-bar-wrap">
+                  <div
+                    className="km-shipping-progress-bar"
+                    style={{ width: `${Math.min((subtotal / SHIPPING_THRESHOLD) * 100, 100)}%` }}
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        )}
 
         <div className="km-cart-layout">
           {cart.length === 0 ? (
@@ -277,48 +382,25 @@ export default function CartPage() {
             </div>
           ) : (
             <>
-              {/* ITEMS */}
               <div className="km-cart-items">
                 {cart.map((item) => (
                   <div key={item.id} className="km-cart-item">
-                    <img
-                      src={item.image_url}
-                      alt={item.name}
-                      className="km-cart-item-img"
-                    />
+                    <img src={item.image_url} alt={item.name} className="km-cart-item-img" />
                     <div className="km-cart-item-info">
                       <span className="km-cart-item-name">{item.name}</span>
-                      <span className="km-cart-item-price">¥{item.price.toLocaleString()}</span>
+                      <span className="km-cart-item-price">¥{item.price.toLocaleString()}（税込）</span>
                       <div className="km-cart-qty">
-                        <button
-                          className="km-cart-qty-btn"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        >
-                          −
-                        </button>
+                        <button className="km-cart-qty-btn" onClick={() => updateQuantity(item.id, item.quantity - 1)}>−</button>
                         <span className="km-cart-qty-num">{item.quantity}</span>
-                        <button
-                          className="km-cart-qty-btn"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        >
-                          +
-                        </button>
+                        <button className="km-cart-qty-btn" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
                       </div>
-                      <button
-                        className="km-cart-remove"
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        Remove
-                      </button>
+                      <button className="km-cart-remove" onClick={() => removeFromCart(item.id)}>Remove</button>
                     </div>
-                    <span className="km-cart-item-subtotal">
-                      ¥{(item.price * item.quantity).toLocaleString()}
-                    </span>
+                    <span className="km-cart-item-subtotal">¥{(item.price * item.quantity).toLocaleString()}</span>
                   </div>
                 ))}
               </div>
 
-              {/* SUMMARY */}
               <div className="km-cart-summary">
                 <h2 className="km-summary-title">Order Summary</h2>
                 {cart.map((item) => (
@@ -329,13 +411,18 @@ export default function CartPage() {
                 ))}
                 <div className="km-summary-row">
                   <span>送料</span>
-                  <span>商品ページ記載</span>
+                  {shipping === 0 ? (
+                    <span className="km-summary-shipping-free">無料</span>
+                  ) : (
+                    <span>¥{shipping.toLocaleString()}</span>
+                  )}
                 </div>
                 <div className="km-summary-divider" />
                 <div className="km-summary-total">
                   <span className="km-summary-total-label">合計</span>
                   <span className="km-summary-total-amount">¥{total.toLocaleString()}</span>
                 </div>
+                <p className="km-summary-tax-note">税込・送料込み</p>
                 <button className="km-checkout-btn" onClick={checkout}>
                   Proceed to Checkout
                 </button>
