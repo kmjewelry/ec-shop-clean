@@ -11,8 +11,6 @@ export default function About() {
           background: #FAFAF8;
           color: #1A1A1A;
         }
-
-        /* HERO */
         .km-about-hero {
           position: relative;
           height: 70vh;
@@ -51,8 +49,6 @@ export default function About() {
           margin: 0;
           line-height: 1.1;
         }
-
-        /* INTRO */
         .km-about-intro {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -93,8 +89,6 @@ export default function About() {
           height: 100%;
           object-fit: cover;
         }
-
-        /* VALUES */
         .km-about-values {
           background: #1A1A1A;
           color: #FAFAF8;
@@ -147,8 +141,6 @@ export default function About() {
           line-height: 1.8;
           color: rgba(250,250,248,0.55);
         }
-
-        /* MAKER */
         .km-about-maker {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -191,103 +183,3 @@ export default function About() {
           line-height: 1.9;
           color: #555;
         }
-        .km-about-maker-sig {
-          font-family: 'Cormorant Garamond', serif;
-          font-style: italic;
-          font-size: 22px;
-          color: #B8956A;
-          margin-top: 32px;
-        }
-
-        @media (max-width: 900px) {
-          .km-about-intro { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
-          .km-about-intro-img { order: -1; }
-          .km-about-values { padding: 60px 24px; }
-          .km-about-values-grid { grid-template-columns: 1fr; gap: 32px; }
-          .km-about-maker { grid-template-columns: 1fr; }
-          .km-about-maker-text { padding: 60px 32px; }
-        }
-      `}</style>
-
-        {/* INTRO */}
-        <section className="km-about-intro">
-          <div>
-            <h2 className="km-about-intro-heading">
-              Jewelry that makes your<br /><em>everyday shine</em>
-            </h2>
-            <div className="km-about-gold-line" />
-            <p className="km-about-intro-body">
-              KM Jewelryは、日本からお届けするMade in Japanのジュエリーブランドです。世界最高峰の宝石学機関として知られるGIA（米国宝石学会）のGraduate Gemologist（GG）資格取得者が、品質と信頼を軸にセレクトした一品をお届けします。
-            </p>
-            <p className="km-about-intro-body" style={{ marginTop: 20 }}>
-              「世の中の人の毎日を、少しでも輝かせたい」——そんな想いを胸に、日常に寄り添うジュエリーを丁寧にお届けしています。特別な日だけでなく、普段の自分をもっと好きになれるような、そんな一点をお探しの方へ。
-            </p>
-          </div>
-          <div className="km-about-intro-img">
-            <img
-              src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=900&q=80"
-              alt="KM Jewelry"
-            />
-          </div>
-        </section>
-
-        {/* VALUES */}
-        <section className="km-about-values">
-          <div className="km-about-values-header">
-            <p className="km-about-values-eyebrow">What We Stand For</p>
-            <h2 className="km-about-values-title">Our Philosophy</h2>
-          </div>
-          <div className="km-about-values-grid">
-            {[
-              {
-                num: "01",
-                title: "GIA認定の品質",
-                desc: "世界的に権威ある宝石学機関GIAのGG資格保持者が、素材の品質と信頼性を厳しくチェック。確かな目利きで選ばれたジュエリーのみをお届けします。",
-              },
-              {
-                num: "02",
-                title: "Made in Japan",
-                desc: "日本の高い品質基準のもとでお届けするジュエリー。細部へのこだわりと丁寧な仕上がりは、日本ブランドとしての誇りです。",
-              },
-              {
-                num: "03",
-                title: "日常に寄り添う輝き",
-                desc: "特別なシーンだけでなく、毎日の生活の中で自然と輝けるデザインを大切にしています。あなたの毎日を少しだけ豊かに。",
-              },
-            ].map((v) => (
-              <div key={v.num} className="km-about-value-item">
-                <p className="km-about-value-num">{v.num}</p>
-                <h3 className="km-about-value-title">{v.title}</h3>
-                <p className="km-about-value-desc">{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* MAKER */}
-        <section className="km-about-maker">
-          <div className="km-about-maker-img">
-            <img
-              src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=900&q=80"
-              alt="KM Jewelry"
-            />
-          </div>
-          <div className="km-about-maker-text">
-            <p className="km-about-maker-eyebrow">Our Commitment</p>
-            <h2 className="km-about-maker-heading">
-              確かな知識と、<br />誠実なものづくり
-            </h2>
-            <p className="km-about-maker-body">
-              GIAのGraduate Gemologist（GG）は、ダイヤモンド・カラーストーン・真珠など、あらゆる宝石を科学的かつ国際的な基準で鑑別できる、世界が認める最高峰の資格です。
-            </p>
-            <p className="km-about-maker-body" style={{ marginTop: 16 }}>
-              KM Jewelryは、その専門知識を活かし、品質に妥協しないジュエリーを日本からお届けします。あなたの大切な毎日に、本物の輝きを。
-            </p>
-            <p className="km-about-maker-sig">— KM Jewelry</p>
-          </div>
-        </section>
-
-      </div>
-    </>
-  );
-}
