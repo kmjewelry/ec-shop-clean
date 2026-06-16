@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -12,7 +13,6 @@ export default function Home() {
           background: #FAFAF8;
         }
 
-        /* HERO */
         .km-hero {
           position: relative;
           height: 92vh;
@@ -48,14 +48,31 @@ export default function Home() {
           color: #B8956A;
           margin-bottom: 24px;
         }
+
+        /* ロゴ + テキストの横並びレイアウト */
+        .km-hero-brand {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          margin-bottom: 20px;
+        }
+        .km-hero-logo {
+          width: 64px;
+          height: 64px;
+          object-fit: contain;
+          filter: brightness(0) invert(1);
+          opacity: 0.92;
+        }
         .km-hero-title {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(52px, 8vw, 96px);
           font-weight: 300;
           line-height: 1.05;
           letter-spacing: 0.04em;
-          margin: 0 0 20px;
+          margin: 0;
         }
+
         .km-hero-sub {
           font-family: 'Cormorant Garamond', serif;
           font-style: italic;
@@ -103,7 +120,6 @@ export default function Home() {
           background: rgba(250,250,248,0.3);
         }
 
-        /* COLLECTIONS */
         .km-collections {
           padding: 120px 60px;
           background: #FAFAF8;
@@ -145,9 +161,7 @@ export default function Home() {
           transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
           filter: brightness(0.78);
         }
-        .km-collection-item:hover img {
-          transform: scale(1.06);
-        }
+        .km-collection-item:hover img { transform: scale(1.06); }
         .km-collection-label {
           position: absolute;
           bottom: 0;
@@ -172,15 +186,12 @@ export default function Home() {
           color: #B8956A;
         }
 
-        /* CRAFT / STORY */
         .km-craft {
           display: grid;
           grid-template-columns: 1fr 1fr;
           min-height: 600px;
         }
-        .km-craft-img-wrap {
-          overflow: hidden;
-        }
+        .km-craft-img-wrap { overflow: hidden; }
         .km-craft-img-wrap img {
           width: 100%;
           height: 100%;
@@ -194,9 +205,7 @@ export default function Home() {
           justify-content: center;
           padding: 80px 72px;
         }
-        .km-craft-text .km-eyebrow {
-          color: #B8956A;
-        }
+        .km-craft-text .km-eyebrow { color: #B8956A; }
         .km-craft-heading {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(32px, 4vw, 52px);
@@ -226,11 +235,8 @@ export default function Home() {
           padding-bottom: 4px;
           transition: opacity 0.2s;
         }
-        .km-btn-ghost:hover {
-          opacity: 0.7;
-        }
+        .km-btn-ghost:hover { opacity: 0.7; }
 
-        /* PROMISE */
         .km-promise {
           padding: 100px 60px;
           background: #FAFAF8;
@@ -239,9 +245,7 @@ export default function Home() {
           gap: 60px;
           border-top: 1px solid #E8E4DF;
         }
-        .km-promise-item {
-          text-align: center;
-        }
+        .km-promise-item { text-align: center; }
         .km-promise-num {
           font-family: 'Cormorant Garamond', serif;
           font-size: 48px;
@@ -270,6 +274,7 @@ export default function Home() {
           .km-craft { grid-template-columns: 1fr; }
           .km-craft-text { padding: 60px 32px; }
           .km-promise { grid-template-columns: 1fr; padding: 60px 32px; gap: 40px; }
+          .km-hero-logo { width: 48px; height: 48px; }
         }
       `}</style>
 
@@ -278,13 +283,23 @@ export default function Home() {
         {/* HERO */}
         <section className="km-hero">
           <img
-            src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=1800&q=80"
+            src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1800&q=80"
             alt="KM Jewelry"
             className="km-hero-img"
           />
           <div className="km-hero-content">
             <p className="km-eyebrow">Fine Jewelry — Made in Japan</p>
-            <h1 className="km-hero-title">KM Jewelry</h1>
+
+            {/* ✅ ロゴ + タイトル横並び */}
+            <div className="km-hero-brand">
+              <img
+                src="/logo.png"
+                alt="KM Jewelry Logo"
+                className="km-hero-logo"
+              />
+              <h1 className="km-hero-title">KM Jewelry</h1>
+            </div>
+
             <p className="km-hero-sub">Everyday Brilliance</p>
             <Link href="/products" className="km-btn-primary">
               Explore Collection
