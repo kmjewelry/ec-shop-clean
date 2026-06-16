@@ -283,7 +283,8 @@ export default function Home() {
         {/* HERO */}
         <section className="km-hero">
           <img
-            src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1800&q=80"
+            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1800&q=80
+            "
             alt="KM Jewelry"
             className="km-hero-img"
           />
