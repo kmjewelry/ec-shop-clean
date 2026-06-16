@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState, useMemo, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 const CATEGORIES = [
@@ -14,15 +13,18 @@ const CATEGORIES = [
 ];
 
 function ProductsContent() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
-
-  const activeCategory = searchParams.get("category") || "";
+  const [activeCategory, setActiveCategory] = useState("");
 
   useEffect(() => {
+    // URLから直接カテゴリーを読み取る
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category") || "";
+    setActiveCategory(category);
+
+    // 商品データ取得
     const fetchProducts = async () => {
       const { data, error } = await supabase.from("products").select("*");
       if (error) {
@@ -34,14 +36,6 @@ function ProductsContent() {
     };
     fetchProducts();
   }, []);
-
-  const handleCategoryChange = (value: string) => {
-    if (value) {
-      router.push(`/products?category=${value}`);
-    } else {
-      router.push(`/products`);
-    }
-  };
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
@@ -275,7 +269,7 @@ function ProductsContent() {
             <button
               key={cat.value}
               className={`km-filter-tab${activeCategory === cat.value ? " active" : ""}`}
-              onClick={() => handleCategoryChange(cat.value)}
+              onClick={() => setActiveCategory(cat.value)}
             >
               {cat.label}
             </button>
