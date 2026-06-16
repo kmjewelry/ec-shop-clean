@@ -15,7 +15,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // メニュー開閉時にbodyスクロールを制御
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -64,15 +63,9 @@ export default function Header() {
           z-index: 110;
           position: relative;
         }
-        .km-header.scrolled .km-logo {
-          color: #1A1A1A;
-        }
-        /* メニューオープン中はロゴを黒に */
-        .km-header.menu-open .km-logo {
-          color: #1A1A1A;
-        }
+        .km-header.scrolled .km-logo { color: #1A1A1A; }
+        .km-header.menu-open .km-logo { color: #1A1A1A; }
 
-        /* ── PC ナビ ── */
         .km-nav {
           display: flex;
           align-items: center;
@@ -91,9 +84,7 @@ export default function Header() {
           padding-bottom: 2px;
           transition: color 0.4s;
         }
-        .km-header.scrolled .km-nav-link {
-          color: #1A1A1A;
-        }
+        .km-header.scrolled .km-nav-link { color: #1A1A1A; }
         .km-nav-link::after {
           content: '';
           position: absolute;
@@ -143,7 +134,6 @@ export default function Header() {
 
         .km-header-spacer { height: 72px; }
 
-        /* ── ハンバーガーボタン（スマホのみ表示） ── */
         .km-hamburger {
           display: none;
           flex-direction: column;
@@ -167,13 +157,10 @@ export default function Header() {
         }
         .km-header.scrolled .km-hamburger span { background: #1A1A1A; }
         .km-header.menu-open .km-hamburger span { background: #1A1A1A; }
-
-        /* ✕ アニメーション */
         .km-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
         .km-hamburger.open span:nth-child(2) { opacity: 0; }
         .km-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-        /* ── モバイルメニューオーバーレイ ── */
         .km-mobile-menu {
           display: none;
           position: fixed;
@@ -194,6 +181,30 @@ export default function Header() {
           pointer-events: auto;
         }
 
+        /* ✕ 閉じるボタン */
+        .km-mobile-close {
+          position: absolute;
+          top: 20px;
+          right: 24px;
+          width: 44px;
+          height: 44px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #1A1A1A;
+          transition: color 0.3s;
+        }
+        .km-mobile-close:hover { color: #B8956A; }
+        .km-mobile-close svg {
+          width: 20px;
+          height: 20px;
+          stroke: currentColor;
+          stroke-width: 1.5;
+        }
+
         .km-mobile-nav-link {
           font-family: 'Cormorant Garamond', serif;
           font-size: 32px;
@@ -205,22 +216,21 @@ export default function Header() {
         }
         .km-mobile-nav-link:hover { color: #B8956A; }
 
+        /* ✅ Cartも他と同じCormorant Garamondの32pxに統一 */
         .km-mobile-cart-link {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          font-family: 'Inter', sans-serif;
-          font-size: 11px;
-          font-weight: 400;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 32px;
+          font-weight: 300;
+          letter-spacing: 0.14em;
           text-decoration: none;
           color: #1A1A1A;
           transition: color 0.3s;
         }
         .km-mobile-cart-link:hover { color: #B8956A; }
 
-        /* ── レスポンシブ切り替え ── */
         @media (max-width: 768px) {
           .km-header { padding: 0 24px; }
           .km-nav { display: none; }
@@ -234,7 +244,6 @@ export default function Header() {
           KM Jewelry
         </Link>
 
-        {/* PC ナビ */}
         <nav className="km-nav">
           <Link href="/products" className="km-nav-link">Products</Link>
           <Link href="/about" className="km-nav-link">About</Link>
@@ -247,20 +256,28 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* ハンバーガーボタン */}
         <button
           className={`km-hamburger${menuOpen ? " open" : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen(true)}
           aria-label="メニューを開く"
         >
-          <span />
-          <span />
-          <span />
+          <span /><span /><span />
         </button>
       </header>
 
-      {/* モバイルメニューオーバーレイ */}
       <div className={`km-mobile-menu${menuOpen ? " open" : ""}`}>
+        {/* ✅ ✕ 閉じるボタン */}
+        <button
+          className="km-mobile-close"
+          onClick={() => setMenuOpen(false)}
+          aria-label="メニューを閉じる"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <line x1="4" y1="4" x2="20" y2="20" />
+            <line x1="20" y1="4" x2="4" y2="20" />
+          </svg>
+        </button>
+
         <Link href="/products" className="km-mobile-nav-link" onClick={() => setMenuOpen(false)}>Products</Link>
         <Link href="/about" className="km-mobile-nav-link" onClick={() => setMenuOpen(false)}>About</Link>
         <Link href="/contact" className="km-mobile-nav-link" onClick={() => setMenuOpen(false)}>Contact</Link>
