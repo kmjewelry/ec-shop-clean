@@ -26,3 +26,10 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const metadata = {
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
+};
