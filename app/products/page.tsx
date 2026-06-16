@@ -18,8 +18,9 @@ function ProductsContent() {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("");
-  
+  const initialCategory = searchParams.get("category") || "";
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+
   useEffect(() => {
    const category = searchParams.get("category") || "";
    setActiveCategory(category);
