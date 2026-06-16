@@ -305,22 +305,22 @@ export default function Home() {
           <div className="km-collections-grid">
             {[
               {
-                href: "/collections/rings",
+                href: "/products?category/rings",
                 label: "Rings",
                 img: "https://images.unsplash.com/photo-1543294001-f7cd5d7fb516?w=800&q=80",
               },
               {
-                href: "/collections/necklaces",
+                href: "/products?category/necklaces",
                 label: "Necklaces",
                 img: "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=800&q=80",
               },
               {
-                href: "/collections/bracelets",
+                href: "/products?category/bracelets",
                 label: "Bracelets",
                 img: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
               },
               {
-                href: "/collections/earrings",
+                href: "/products?category/earrings",
                 label: "Earrings",
                 img: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80",
               },
