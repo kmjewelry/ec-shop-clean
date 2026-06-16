@@ -102,7 +102,7 @@ export default function Footer() {
           <div>
             <p className="km-footer-brand-name">KM Jewelry</p>
             <p className="km-footer-brand-desc">
-              Fine handmade jewelry crafted with passion and precision. Each piece reflects elegance, craftsmanship, and individuality.
+              Fine jewelry crafted with passion and precision. Each piece reflects elegance, craftsmanship, and individuality.
             </p>
           </div>
 

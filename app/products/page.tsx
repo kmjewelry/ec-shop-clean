@@ -173,7 +173,7 @@ export default function ProductsPage() {
         <div className="km-page-hero">
           <p className="km-page-eyebrow">KM Jewelry</p>
           <h1 className="km-page-title">Our Collection</h1>
-          <p className="km-page-sub">Handcrafted pieces for the discerning eye</p>
+          <p className="km-page-sub">Fine jewelry for your everyday moments</p>
         </div>
 
         {/* GRID */}
